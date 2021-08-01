@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgresql-data-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /run/desktop/mnt/host/wsl/hostpath/pgdata2
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgresql-data
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  volumeName: postgresql-data-pv
+  resources:
+    requests:
+      storage: 1Gi

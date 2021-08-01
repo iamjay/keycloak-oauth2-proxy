@@ -1,0 +1,47 @@
+postgresql:
+  postgresqlPassword: "password"
+  postgresqlDatabase: "bitnami_keycloak"
+  persistence:
+    existingClaim: "postgresql-data"
+
+keycloak:
+  service:
+    type: NodePort
+  ingress:
+    enabled: true
+    hostname: "keycloak-7f000001.nip.io"
+  auth:
+    adminUser: "admin"
+    adminPassword: "password"
+  postgresql:
+    enabled: false
+  externalDatabase:
+    host: "oidc-postgresql"
+    user: "postgres"
+    password: "password"
+
+oauth2-proxy:
+  config:
+    clientID: "oauth2-proxy"
+    clientSecret: "to_be_replaced"
+    configFile: |-
+      provider = "keycloak"
+      provider_display_name = "Keycloak"
+      email_domains = [ "*" ]
+      scope = "openid profile email"
+      login_url = "http://keycloak-7f000001.nip.io:31234/auth/realms/test/protocol/openid-connect/auth"
+      redeem_url = "http://oidc-keycloak/auth/realms/test/protocol/openid-connect/token"
+      profile_url = "http://oidc-keycloak/auth/realms/test/protocol/openid-connect/userinfo"
+      validate_url = "http://oidc-keycloak/auth/realms/test/protocol/openid-connect/userinfo"
+      redirect_url = "http://test-7f000001.nip.io:31234/oauth2/callback"
+      cookie_secure = false
+      pass_access_token = true
+      pass_authorization_header = true
+      pass_user_headers = true
+      upstreams = [ "http://kuard:8080" ]
+  ingress:
+    enabled: true
+    hosts:
+    - "test-7f000001.nip.io"
+    metrics:
+      enabled: false

@@ -1,0 +1,12 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.8.0
+- name: keycloak
+  repository: https://charts.bitnami.com/bitnami
+  version: 4.1.0
+- name: oauth2-proxy
+  repository: https://oauth2-proxy.github.io/manifests
+  version: 4.1.0
+digest: sha256:e99c337e33aa6e9fca3c7be3a13ce8b7920ede955e6f2eb1478c9d1eb9b374d3
+generated: "2021-08-01T09:28:39.5402545+07:00"
